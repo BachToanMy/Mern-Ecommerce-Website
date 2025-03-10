@@ -1,10 +1,10 @@
 import Header from "./components/Header";
+import Title from "./components/Title";
 import "./index.css";
 function App() {
   return (
     <main>
-      <Header/>
-      <p className="text-xl font-semibold">Client applicaion</p>
+      <Title>Home Page</Title>
     </main>
   );
 }
