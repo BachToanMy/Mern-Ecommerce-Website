@@ -10,7 +10,7 @@ const RooLayout = () => {
       <Header />
       <Outlet />
       <ServiceTags/>
-      <Footer />
+      <Footer/>
     </>
   );
 };
