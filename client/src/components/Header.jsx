@@ -10,7 +10,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="border-b-[1px] border-slate-300 ">
+    <div className="border-b-[1px] border-slate-300 sticky top-0 z-50 bg-white ">
       <Container
         className={"py-7 flex items-center gap-x-3 md:gap-x-7 justify-between"}
       >
