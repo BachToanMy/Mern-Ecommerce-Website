@@ -2,7 +2,8 @@ import React from "react";
 import Container from "./Container";
 import Title from "./Title";
 import SocialLinks from "./socialLinks";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { paymentCard } from "../assets/images/index";
 
 const shopArray = [
   {
@@ -27,7 +28,7 @@ const shopArray = [
   },
 ];
 
-const Account = [
+const account = [
   {
     title: "Profile",
     link: "/profile",
@@ -68,15 +69,52 @@ const Footer = () => {
         <div>
           <Title className="text-xl mb-6">Shop</Title>
           <div className="flex flex-col gap-2">
-            {shopArray?.map((item)=>(
-              <Link key={item?.title} to={item?.link} className="text-base text-lightText hover:text-white hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
+            {shopArray?.map((item) => (
+              <Link
+                key={item?.title}
+                to={item?.link}
+                className="text-base text-lightText hover:text-white hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300"
+              >
                 {item?.title}
               </Link>
             ))}
           </div>
         </div>
         {/* Third */}
+        <div>
+          <Title className="text-xl mb-6">Your account</Title>
+          <div className="flex flex-col gap-2">
+            {account?.map((item) => (
+              <Link
+                key={item?.title}
+                to={item?.link}
+                className="text-base text-lightText hover:text-white hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300"
+              >
+                {item?.title}
+              </Link>
+            ))}
+          </div>
+        </div>
         {/* Fourth */}
+        <div className="col-span-2 flex flex-col items-center w-full">
+          <Title className="text-xl mb-6">Subcribe to our newsletter </Title>
+          <p className="text-lightText text-center">
+            Lorem ipsum dolor sit amet.
+          </p>
+          <div className="my-3">
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Insert your email...*"
+                className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-white text-lg placeholder:text-base outline-none"
+              />
+              <button className="px-6 py-2 bg-primary/70 border border-transparent hover:border-gray-500 duration-300 rounded-md">
+                Submit
+              </button>
+            </div>
+          </div>
+          <img src={paymentCard} alt="" />
+        </div>
       </Container>
     </div>
   );
