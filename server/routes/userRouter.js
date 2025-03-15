@@ -17,6 +17,7 @@ userRouter.post("/remove", removeUser);
 userRouter.put("/update/:id", updateUser);
 userRouter.get("/users", getUsers);
 
+console.log("Hider");
 // userRouter.get('/users', (req, res) => {
 //   res.send("User router connected successfully!");
 // });
