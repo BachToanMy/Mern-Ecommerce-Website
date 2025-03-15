@@ -1,2 +1,0 @@
--e "# Ignore environment files\n.env\n.env.local\n.env.*.local" 
-D:\CTU\ReactJS\mern-ecommerce\server\.env
