@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import 'dotenv/config';
 import dbConnect from './config/mongodb.js';
 import userRouter from './routes/userRouter.js';
@@ -6,6 +7,8 @@ import userRouter from './routes/userRouter.js';
 const app = express();
 
 const port = process.env.PORT || 8000;
+app.use(cors());
+app.use(express.json())
 dbConnect()
 
 console.log(process.env.PORT)
