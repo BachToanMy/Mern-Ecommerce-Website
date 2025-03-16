@@ -149,7 +149,7 @@ const adminLogin = async (req, res) => {
       res.status(200).json({
         success: true,
         token,
-        message: "Login successfully",
+        message: "Welcome admin user",
       });
     } else {
       res.status(402).json({
