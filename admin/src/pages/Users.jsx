@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Users = () => {
+  const [usersList,setUsersList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const getUsersList = async()=>{
+
+  };
+  useEffect(()=>{
+
+  },[]);
   return (
     <div>Users</div>
   )
