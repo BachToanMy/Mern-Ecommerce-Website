@@ -7,6 +7,7 @@ import {
   userLogin,
   userRegister,
 } from "../controllers/userController.js";
+import adminAuth from "../middleware/adminAuth.js";
 
 const userRouter = express.Router();
 
@@ -15,7 +16,7 @@ userRouter.post("/login", userLogin);
 userRouter.post("/admin", adminLogin);
 userRouter.post("/remove", removeUser);
 userRouter.put("/update/:id", updateUser);
-userRouter.get("/users", getUsers);
+userRouter.get("/users",adminAuth, getUsers);
 
 console.log("Hider");
 // userRouter.get('/users', (req, res) => {
