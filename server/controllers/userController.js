@@ -9,7 +9,7 @@ const createToken = (user) => {
       _id: user._id,
       email: user.email,
       name: user.name,
-      isAdmin:user.isAdmin,
+      isAdmin: user.isAdmin,
     },
     process.env.JWT_SECRET,
     { expiresIn: "864000" }
@@ -172,7 +172,10 @@ const adminLogin = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch && user?.isAdmin) {
-      const token = jwt.sign(email + password + user?.isAdmin, process.env.JWT_SECRET);
+      const token = jwt.sign(
+        email + password + user?.isAdmin,
+        process.env.JWT_SECRET
+      );
       res.status(200).json({
         success: true,
         token,
@@ -212,42 +215,63 @@ const removeUser = async (req, res) => {
 /////UPDATE USER///////////////////////////////////////////////////////////////////////
 const updateUser = async (req, res) => {
   try {
-    const { _id, name, email, password } = req.body;
-    const user = await userModel.findById(_id);
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+
+    // Kiểm tra user có tồn tại không
+    const user = await userModel.findById(id);
     if (!user) {
-      res.status(401).json({
+      return res.status(404).json({
         success: false,
         message: "User was not found",
       });
-    } else {
-      if (name) user.name = name;
-      if (email) {
-        if (!validator.isEmail(email)) {
-          return res.status(400).json({
-            success: false,
-            message: "Please enter a valid email address",
-          });
-        }
-        user.email = email;
-      }
-      if (password) {
-        if (password.length < 8) {
-          return res.status(401).json({
-            success: true,
-            message: "Password length should be equal or grater than 8",
-          });
-        }
-        const salt = bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, genSalt);
-      }
-      await user.save();
-      res.json({
-        success: true,
-        message: "User was updated successfully",
-      });
     }
+
+    // Cập nhật name nếu có
+    if (name) user.name = name;
+
+    // Kiểm tra và cập nhật email nếu có thay đổi
+    if (email) {
+      if (!validator.isEmail(email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Please enter a valid email address",
+        });
+      }
+      
+      // Kiểm tra xem email đã được sử dụng chưa
+      const existingUser = await userModel.findOne({ email });
+      if (existingUser && existingUser.id !== id) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is already in use",
+        });
+      }
+
+      user.email = email;
+    }
+
+    // Kiểm tra và cập nhật password nếu có
+    if (password) {
+      if (password.length < 8) {
+        return res.status(400).json({
+          success: false,
+          message: "Password length should be at least 8 characters",
+        });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    // Lưu lại user đã cập nhật
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "User was updated successfully",
+    });
   } catch (error) {
-    console.error("Update user's information false: ", error);
+    console.error("Update user's information failed: ", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

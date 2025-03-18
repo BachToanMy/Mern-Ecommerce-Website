@@ -64,6 +64,7 @@ const Users = ({ token }) => {
     }
   };
   const openLoginForm = () => {
+    setSelectedUser(null);
     setIsOpen(true);
   };
   const closeLoginForm = () => {
@@ -140,6 +141,7 @@ const Users = ({ token }) => {
         close={closeLoginForm}
         getUsersList={getUsersList}
         selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
       />
     </div>
   );
