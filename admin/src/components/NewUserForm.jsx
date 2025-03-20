@@ -11,7 +11,7 @@ export default function NewUserForm({
   setIsOpen,
   close,
   selectedUser,
-  setSelectedUser,
+  // setSelectedUser,
   getUsersList,
 }) {
   const [formData, setFormData] = useState({

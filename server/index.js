@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import dbConnect from './config/mongodb.js';
 import userRouter from './routes/userRouter.js';
+import productRouter from './routes/productRouter.js';
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.get('/',(req,res)=>{
     res.send("Hello from orebi api server");
 });
 
-app.use('/api/user',userRouter)
+app.use('/api/user',userRouter);
+app.use('/api/product',productRouter);
 
 app.get('/api',(req,res)=>{
     res.send('this is orebi commerce')
