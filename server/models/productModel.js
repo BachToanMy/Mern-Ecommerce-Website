@@ -11,11 +11,11 @@ const productSchema = new mongoose.Schema({
   badge: { type: Boolean },
   isAvailable: { type: Boolean },
   offer: { type: Boolean },
-  description: { type: String, required },
+  description: { type: String, required:true },
   tags: { type: Array },
 });
 
 const productModel =
   mongoose.models.product || mongoose.model("product", productSchema);
 
-  export default productModel;
+export default productModel;
