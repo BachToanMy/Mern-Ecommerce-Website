@@ -17,7 +17,7 @@ const Add = () => {
     _type: "",
     category: "",
     offer: false,
-    available: true,
+    isAvailable: true,
     badge: false,
     tags: [],
     image1: null,
@@ -140,7 +140,7 @@ const Add = () => {
           <select
             name="category"
             onChange={handleChange}
-            className="border px-4 pr-6 py-2 border-gray-500 rounded-md max-w-[170px] appearance-none relative"
+            className="border pl-4 pr-6 py-2 border-gray-500 rounded-md max-w-[170px] appearance-none relative"
           >
             <option value={""}>Select category</option>
             <option value={"men"}>Men</option>
@@ -150,6 +150,55 @@ const Add = () => {
             <option value={"others"}>Others</option>
           </select>
           <IoIosArrowDown className="text-sm absolute top-10 right-2" />
+        </div>
+        <div className="flex flex-col w-full gap-1 relative">
+          <Label htmlFor={"offer"}>Offer</Label>
+          <select
+            name="offer"
+            onChange={handleChange}
+            className="border px-4 pr-6 py-2 border-gray-500 rounded-md max-w-[150px] appearance-none relative"
+          >
+            <option value={"false"}>False</option>
+            <option value={"true"}>True</option>
+          </select>
+          <IoIosArrowDown className="text-sm absolute top-10 right-2" />
+        </div>
+        <div className="flex flex-col w-full gap-1 relative">
+          <Label htmlFor={"isAvailable"}>Available</Label>
+          <select
+            name="isAvailable"
+            onChange={handleChange}
+            className="border pl-4 pr-6 py-2 border-gray-500 rounded-md max-w-[150px] appearance-none relative"
+          >
+            <option value={"true"}>True</option>
+            <option value={"false"}>False</option>
+          </select>
+          <IoIosArrowDown className="text-sm absolute top-10 right-2" />
+        </div>
+        <div className="flex flex-col w-full gap-1 relative">
+          <Label htmlFor={"badge"}>Badge</Label>
+          <select
+            name="badge"
+            onChange={handleChange}
+            className="border pl-4 pr-6 py-2 border-gray-500 rounded-md max-w-[150px] appearance-none relative"
+          >
+            <option value={"false"}>False</option>
+            <option value={"true"}>True</option>
+          </select>
+          <IoIosArrowDown className="text-sm absolute top-10 right-2" />
+        </div>
+      </div>
+      <div className="flex flex-col gap-1 items-start ">
+        <Label htmlFor={"tags"}>Tags</Label>
+        <div>
+          {["Fashion", "Electronics", "Sports", "Accessories", "Others"].map(
+            (tag) => (
+              <div className="flex items-center gap-2">
+                <input type="checkbox" id={tag.toLowerCase()} />
+                <p>{tag}</p>
+              </div>
+            )
+          )}
         </div>
       </div>
     </form>
