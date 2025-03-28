@@ -7,7 +7,11 @@ import {
   IoMdCloudUpload,
 } from "react-icons/io";
 import Input, { Label } from "../components/ui/input";
+import SmallLoader from "../components/SmallLoader";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 const Add = () => {
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -194,13 +198,46 @@ const Add = () => {
           {["Fashion", "Electronics", "Sports", "Accessories", "Others"].map(
             (tag) => (
               <div className="flex items-center gap-2">
-                <input type="checkbox" id={tag.toLowerCase()} />
+                <input
+                  type="checkbox"
+                  id={tag.toLowerCase()}
+                  name="tags"
+                  value={tag}
+                  className="cursor-pointer"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        tags: [...prevData.tags, tag],
+                      }));
+                    } else {
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        tags: prevData.tags.filter((t) => t !== tag),
+                      }));
+                    }
+                  }}
+                />
                 <p>{tag}</p>
               </div>
             )
           )}
         </div>
       </div>
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-black/80 text-white uppercase font-semibold flex items-center justify-center gap-2 tracking-wide w-44 py-2.5 rounded-md hover:bg-black duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
+      >
+        Add
+        {loading ? (
+          <span className="text-white animate-spin">
+            <AiOutlineLoading3Quarters />
+          </span>
+        ) : (
+          <IoMdAdd className="text-lg mt-0.5" />
+        )}
+      </button>
     </form>
   );
 };
