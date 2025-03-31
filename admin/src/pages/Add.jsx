@@ -7,11 +7,14 @@ import {
   IoMdCloudUpload,
 } from "react-icons/io";
 import Input, { Label } from "../components/ui/input";
-import SmallLoader from "../components/SmallLoader";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Add = () => {
-  const [loading, setLoading] = useState(true);
+const Add = ({ token }) => {
+  const serverUrl = import.meta.env.VITE_BACKEND_URL;
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -27,6 +30,7 @@ const Add = () => {
     image1: null,
     image2: null,
   });
+  const navigate = useNavigate();
   const handleImageChange = (e) => {
     const { id, files } = e.target;
     setFormData({
@@ -45,8 +49,43 @@ const Add = () => {
       setFormData({ ...formData, [name]: value });
     }
   };
+  const handleUploadProduct = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value instanceof File) {
+          data.append(key, value);
+        } else {
+          data.append(key, value);
+        }
+      });
+      const response = await axios.post(serverUrl + "api/product/add", data, {
+        headers: {
+          token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const responseData = await response.data;
+      if(responseData?.success){
+        toast.success(responseData?.message);
+        navigate('/list');
+      }else{
+        toast.error(responseData?.message);
+      }
+    } catch (error) {
+      console.log("product data uploading error:", error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className="flex flex-col items-start gap-3 w-full pb-60">
+    <form
+      onSubmit={handleUploadProduct}
+      className="flex flex-col items-start gap-3 w-full pb-10"
+    >
       <Title>Upload products to Database</Title>
       <div className="flex flex-wrap items-center gap-5">
         {["image1", "image2"].map((imageId) => (
@@ -66,6 +105,7 @@ const Add = () => {
                 hidden
                 id={imageId}
                 onChange={handleImageChange}
+                disabled={loading}
               />
               <p className=" items-center text-center mt-1">
                 {formData[imageId] ? "Change" : "Upload"}
@@ -81,6 +121,7 @@ const Add = () => {
           placeholder={"Enter product name here"}
           name="name"
           onChange={handleChange}
+          disabled={loading}
         />
       </div>
       <div className="flex flex-col w-full gap-1">
@@ -91,6 +132,7 @@ const Add = () => {
           placeholder="Enter product description..."
           name="description"
           onChange={handleChange}
+          disabled={loading}
           className="border px-4 py-2 border-gray-500 rounded-md max-w-lg resize-none"
         />
       </div>
@@ -100,6 +142,7 @@ const Add = () => {
           type={"text"}
           placeholder={"Enter product brand here"}
           name="brand"
+          disabled={loading}
           onChange={handleChange}
         />
       </div>
@@ -111,6 +154,7 @@ const Add = () => {
             placeholder={"Enter product price here"}
             name="price"
             onChange={handleChange}
+            disabled={loading}
           />
         </div>
         <div className="flex flex-col w-full gap-1">
@@ -120,6 +164,7 @@ const Add = () => {
             placeholder={"Enter product discount here...%"}
             name="discount"
             onChange={handleChange}
+            disabled={loading}
           />
         </div>
       </div>
@@ -129,6 +174,7 @@ const Add = () => {
           <select
             name="_type"
             onChange={handleChange}
+            disabled={loading}
             className="border px-4 pr-6 py-2 border-gray-500 rounded-md max-w-[150px] appearance-none relative"
           >
             <option value={""}>Select Type</option>
@@ -197,7 +243,7 @@ const Add = () => {
         <div>
           {["Fashion", "Electronics", "Sports", "Accessories", "Others"].map(
             (tag) => (
-              <div className="flex items-center gap-2">
+              <div key={tag} className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   id={tag.toLowerCase()}

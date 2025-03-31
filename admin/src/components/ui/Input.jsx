@@ -21,6 +21,7 @@ export default function Input({
   name,
   onChange,
   value,
+  disabled,
 }) {
   return (
     <input
@@ -34,6 +35,7 @@ export default function Input({
       placeholder={placeholder}
       onChange={onChange}
       value={value}
+      disabled={disabled}
     />
   );
 }
