@@ -5,6 +5,8 @@ import { serverUrl } from "../../config";
 import Title from "../components/Title";
 import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
+import PriceFormat from "../components/PriceFormat";
+import { IoMdClose } from "react-icons/io";
 const List = () => {
   const [list, setList] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -53,6 +55,30 @@ const List = () => {
                 <b className="text-center">Action</b>
                 <b className="text-center">Edit</b>
               </div>
+              {list?.map((item) => (
+                <div
+                  key={item?._id}
+                  className="grid grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr] items-center py-1 px-2 border border-gray-300 bg-gray-100 text-sm"
+                >
+                  <img
+                    src={item?.images[0]}
+                    at="productImage"
+                    className="w-16 bg-white rounded-sm"
+                  />
+                  <p className="font-semibold line-clamp-1">{item?.name}</p>
+                  <p className="hidden md:inline-block font-medium">
+                    {item?.category}
+                  </p>
+                  <PriceFormat
+                    amount={item?.price}
+                    className="text-green-600"
+                  />
+                  <div className="flex justify-center">
+                    <IoMdClose className="text-lg cursor-pointer hover:text-red-600 duration-300 ease-in-out"/>
+                  </div>
+                <Link to={'/'}>Edit</Link>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="mt-2">
