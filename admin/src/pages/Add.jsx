@@ -61,6 +61,8 @@ const Add = ({ token }) => {
           data.append(key, value);
         }
       });
+      console.log(formData);
+      console.log(data);
       const response = await axios.post(serverUrl + "api/product/add", data, {
         headers: {
           token,
@@ -68,15 +70,15 @@ const Add = ({ token }) => {
         },
       });
       const responseData = await response.data;
-      if(responseData?.success){
+      if (responseData?.success) {
         toast.success(responseData?.message);
-        navigate('/list');
-      }else{
+        navigate("/list");
+      } else {
         toast.error(responseData?.message);
       }
     } catch (error) {
-      console.log("product data uploading error:", error);
-      toast.error(error.message);
+      console.log("Product data uploading error:", error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
