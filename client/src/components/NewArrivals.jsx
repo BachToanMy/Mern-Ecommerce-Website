@@ -69,11 +69,22 @@ const NewArrivals = () => {
     <div className="w-full py-10">
       <div>
         <Title>New Arrivals</Title>
-        <Slider {...settings}>
-            {products?.map((item)=>(
-                <Product key={item?._id} product={item}/>
+        {products?.length > 0 ? (
+          <Slider {...settings}>
+            {products?.map((item) => (
+              <Product key={item?._id} product={item} />
             ))}
-        </Slider>
+          </Slider>
+        ) : (
+          <div className="w-full h-96 flex items-center gap-5 mt-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-full h-full bg-zinc-500 animate-pulse rounded-md"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
