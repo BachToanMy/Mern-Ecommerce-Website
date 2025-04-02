@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import PriceFormat from "../components/PriceFormat";
 import { IoMdClose } from "react-icons/io";
-const List = () => {
+const List = ({ token }) => {
   const [list, setList] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const fetchProductList = async () => {
@@ -30,6 +30,36 @@ const List = () => {
   useEffect(() => {
     fetchProductList();
   }, []);
+  const handleRemoveProduct = async (item) => {
+    const confirmRemoval = window.confirm(
+      `Are you confident that you want to proceed with removing this product (${item?.name})? Consider the implications before making your final decision.`
+    );
+    if (confirmRemoval) {
+      console.log("id: ",item?._id);
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          serverUrl + "api/product/remove",
+          {
+            id: item?._id,
+          },
+          { headers: { token } }
+        );
+        const data = response?.data;
+        if (data?.success) {
+          toast.success(data?.message);
+          await fetchProductList();
+        } else {
+          toast.error(data?.message);
+        }
+      } catch (error) {
+        console.log("Product remove error: ", error?.response?.data?.message);
+        toast.error(error?.response?.data?.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
   return (
     <div>
       {isLoading ? (
@@ -74,9 +104,17 @@ const List = () => {
                     className="text-green-600"
                   />
                   <div className="flex justify-center">
-                    <IoMdClose className="text-lg cursor-pointer hover:text-red-600 duration-300 ease-in-out"/>
+                    <IoMdClose
+                      onClick={() => handleRemoveProduct(item)}
+                      className="text-lg cursor-pointer hover:text-red-600 duration-300 ease-in-out"
+                    />
                   </div>
-                <Link to={'/'}>Edit</Link>
+                  <Link
+                    to={"/add"}
+                    className="hover:text-green-600 duration-300 ease-in-out text-center font-medium"
+                  >
+                    Edit
+                  </Link>
                 </div>
               ))}
             </div>
