@@ -23,7 +23,7 @@ const Product = ({ product }) => {
       <div className="max-w-80 py-4 flex flex-col gap-1 border-[1px] border-t-0 border-gray-300 px-5 rounded-b-md">
         <p className="text-lg text-primary font-bold">{product?.name}</p>
         <PriceContainer product={product} className={''}/>
-        <AddToCartButton product={product} />
+        <AddToCartButton product={product} className={''} />
       </div>
     </div>
   );
