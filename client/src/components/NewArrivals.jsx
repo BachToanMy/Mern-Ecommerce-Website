@@ -6,6 +6,7 @@ import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
 import Slider from "react-slick";
 import Product from "./Product";
+
 const NewArrivals = () => {
   const [products, setProducts] = useState([]);
   const [isLoaing, setLoading] = useState(false);
@@ -68,7 +69,7 @@ const NewArrivals = () => {
   return (
     <div className="w-full py-10">
       <div>
-        <Title>New Arrivals</Title>
+        <Title className='mb-5'>New Arrivals</Title>
         {products?.length > 0 ? (
           <Slider {...settings}>
             {products?.map((item) => (

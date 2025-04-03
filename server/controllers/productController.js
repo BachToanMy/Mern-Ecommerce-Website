@@ -149,9 +149,8 @@ const updateProduct = async (req, res) => {
 ///DETAIL PRODUCT//////////////////////////////////
 const detailProduct = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
 
-    // Kiểm tra nếu id bị undefined hoặc null
     if (!id) {
       return res.status(400).json({
         success: false,
@@ -159,7 +158,6 @@ const detailProduct = async (req, res) => {
       });
     }
 
-    console.log("Product ID:", id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({
         success: false,

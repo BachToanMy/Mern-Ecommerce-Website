@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import Badge from "./Badge";
 import PriceContainer from "./PriceContainer";
 import AddToCartButton from "./AddToCartButton";
-
+import { Link } from "react-router-dom";
 const Product = ({ product }) => {
     console.log('Pricecontainer:',product);
   return (
     <div className="w-full group pr-2.5">
       <div className="h-80 border border-gray-300 rounded-tr-md rounded-tl-md overflow-hidden relative ">
-        <div className="w-full h-full overflow-hidden bg-[#f3f3f3]">
+        <Link to={`/product/${product?._id}`} className="w-full h-full overflow-hidden bg-[#f3f3f3]">
           <img
             src={product?.images[0]}
             alt="Product Image"
             className="w-full h-full group-hover:scale-110 duration-300 object-cover"
           />
-        </div>
+        </Link>
         <div className="absolute top-2 right-2">
           {product?.offer && <Badge title={"Sale"} className={"rounded-sm"} />}
         </div>
