@@ -34,9 +34,10 @@ const PaginationProductList = () => {
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemPerPage(itemsPerPage);
   };
-  return <div className="flex flex-col gap-5">
+  
+  return <div className="flex flex-col gap-5 w-full">
     <ProductBanner itemsPerPageFromBanner={itemsPerPageFromBanner}/>
-    <Pagination/>
+    <Pagination itemsPerPage={itemsPerPage} products={products} />
   </div>;
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Footer from "../Footer";
 import ServiceTags from "../ServiceTags";
 import { Toaster } from "react-hot-toast";
@@ -9,6 +9,7 @@ const RooLayout = () => {
   return (
     <>
       <Header />
+      <ScrollRestoration/>
       <Outlet />
       <ServiceTags />
       <Footer />
