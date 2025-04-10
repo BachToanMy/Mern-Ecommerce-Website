@@ -4,10 +4,11 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 import Footer from "../Footer";
 import ServiceTags from "../ServiceTags";
 import { Toaster } from "react-hot-toast";
-
+import { Provider } from 'react-redux';
+import { store } from "../../redux/store";
 const RooLayout = () => {
   return (
-    <>
+    <Provider store={store}>
       <Header />
       <ScrollRestoration/>
       <Outlet />
@@ -22,7 +23,7 @@ const RooLayout = () => {
           },
         }}
       />
-    </>
+    </Provider>
   );
 };
 

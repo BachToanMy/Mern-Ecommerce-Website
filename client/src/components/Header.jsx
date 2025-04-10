@@ -12,9 +12,11 @@ import { useState } from "react";
 import Title from "./Title";
 import { IoCloseOutline } from "react-icons/io5";
 import SocialLinks from "./SocialLinks";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { products } = useSelector((state) => state.orebi);
   return (
     <div className="border-b-[1px] border-slate-300 sticky top-0 z-50 bg-white ">
       <Container
@@ -41,7 +43,7 @@ const Header = () => {
           >
             <IoMdCart />
             <span className=" absolute -right-2   -top-1 w-3.5 h-3.5 rounded-full text-[9px] bg-lightText group-hover:bg-primary text-white flex items-center justify-center hoverEffect ">
-              0
+              {products?.length > 0 ?products?.length:0}
             </span>
           </Link>
           <Link
@@ -60,7 +62,7 @@ const Header = () => {
         {/* Dialog button */}
         <Dialog
           open={isOpen}
-          onClose={()=>setIsOpen(false)}
+          onClose={() => setIsOpen(false)}
           className="relative z-50 md:hidden text-white/80"
         >
           <div className="fixed inset-0 z-50 w-screen items-center justify-center p-4 bg-black/90">
@@ -70,7 +72,10 @@ const Header = () => {
             >
               <div className="flex items-center justify-between gep-5">
                 <Title className="text-xl text-white">Navigation Menu</Title>
-                <button onClick={()=>setIsOpen(false)} className="text-white/40 text-2xl hover:text-red-600 duration-300 border border-white/20 rounded-sm hover:border-white/40">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-white/40 text-2xl hover:text-red-600 duration-300 border border-white/20 rounded-sm hover:border-white/40"
+                >
                   <IoCloseOutline />
                 </button>
               </div>
