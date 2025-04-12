@@ -28,7 +28,7 @@ export const orebiSlice = createSlice({
       }
     },
     deleteProduct: (state, action) => {
-      state.products.filter((item) => item?._id !== action.payload);
+      state.products = state.products.filter((item) => item?._id !== action.payload);
     },
     resetCart: (state) => {
       state.products = [];
@@ -49,5 +49,6 @@ export const {
   deleteProduct,
   addUser,
   removeUser,
+  resetCart,
 } = orebiSlice.actions;
 export default orebiSlice.reducer;
