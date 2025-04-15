@@ -32,6 +32,9 @@ const Cart = () => {
       dispatch(resetCart());
     }
   };
+  const handleCheckout = () => {
+    toast.success("Payment will proceed shortly");
+  }
   return (
     <Container>
       <Title>My Cart</Title>
@@ -85,9 +88,7 @@ const Cart = () => {
                 </div>
                 <div>
                   <button
-                    onClick={() => {
-                      toast.success("Payment will proceed shortly");
-                    }}
+                    onClick={handleCheckout}
                     className="w-full rounded-md py-2.5 bg-primary/80 text-white hover:bg-primary hoverEffect"
                   >
                     Proceed to Checkout
