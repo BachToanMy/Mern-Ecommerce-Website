@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "./Container";
 import Title from "./Title";
-import SocialLinks from "./socialLinks";
+import SocialLinks from "./SocialLinks";
 import { Link } from "react-router-dom";
 import { paymentCard } from "../assets/images/index";
 
