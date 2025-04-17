@@ -6,6 +6,7 @@ import AddToCartButton from "./AddToCartButton";
 import PriceFormat from "./PriceFormat";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../redux/orebiSlice";
+import PropTypes from "prop-types";
 
 const CartProduct = ({ item }) => {
   const dispatch = useDispatch();
@@ -47,5 +48,7 @@ const CartProduct = ({ item }) => {
     </div>
   );
 };
-
+CartProduct.proTypes = {
+  item: PropTypes.object,
+};
 export default CartProduct;

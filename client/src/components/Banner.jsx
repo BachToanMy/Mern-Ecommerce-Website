@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import { bannerData } from "../constants";
 import Container from "./Container";
 import { useNavigate } from 'react-router-dom';
-// import { bannerImgOne, bannerImgTwo, bannerImgThree } from
+
 const Banner = () => {
   const navigate = useNavigate();
   const [dotActive, setDotActive] = useState(0);
