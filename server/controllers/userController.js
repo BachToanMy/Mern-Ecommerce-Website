@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 import validator from "validator";
-import bcrypt, { genSalt } from "bcrypt";
+import bcryptjs, { genSalt } from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const createToken = (user) => {
@@ -40,7 +40,7 @@ const userLogin = async (req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcryptjs.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
         success: false,
@@ -112,8 +112,8 @@ const userRegister = async (req, res) => {
     }
 
     //Hashing user password
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    const encryptedPassword = await bcryptjs.hash(password, salt);
 
     //Register a new user
     const newUser = new userModel({
@@ -169,7 +169,7 @@ const adminLogin = async (req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcryptjs.compare(password, user.password);
 
     if (isMatch && user?.isAdmin) {
       const token = jwt.sign(
@@ -238,7 +238,7 @@ const updateUser = async (req, res) => {
           message: "Please enter a valid email address",
         });
       }
-      
+
       // Kiểm tra xem email đã được sử dụng chưa
       const existingUser = await userModel.findOne({ email });
       if (existingUser && existingUser.id !== id) {
@@ -259,8 +259,8 @@ const updateUser = async (req, res) => {
           message: "Password length should be at least 8 characters",
         });
       }
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      const salt = await bcryptjs.genSalt(10);
+      user.password = await bcryptjs.hash(password, salt);
     }
 
     // Lưu lại user đã cập nhật
